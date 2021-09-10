@@ -66,7 +66,11 @@ class Athlete:
     return f'{self.code}, {self.firstname} {self.lastname}, {self.birthyear}'
   
   def to_row(self):
-    return f'{self.code} & {self.lastname} {self.firstname} & {self.birthyear} & {self.club} & {self.comment} \\\\ \\hline \n'
+    if self.nc == "true":
+      nc = "x"
+    else:
+      nc = "-"
+    return f'{self.code} & {self.lastname} {self.firstname} & {self.birthyear} & {self.club} & {nc} & {self.comment} \\\\ \\hline \n'
 def main():
   print("python main function")
   entries_tree = ET.parse(opt.xml)
@@ -110,8 +114,8 @@ def main():
   with open(opt.out, "w+") as f:
     f.write(latex_header())
     f.write
-    f.write('\\begin{longtable}{| c | p{4cm} | c | p{4cm} | p{5cm} |}\n\\hline\n')
-    f.write('\\textbf{ÖSV Nr.} & \\textbf{Name} & \\textbf{Jahr} & \\textbf{Verein} & \\textbf{Kommentar} \\\\ \\hline\n \\endhead')
+    f.write('\\begin{longtable}{| c | p{4cm} | c | p{4cm} | c | p{5cm} |}\n\\hline\n')
+    f.write('\\textbf{ÖSV Nr.} & \\textbf{Name} & \\textbf{Jahr} & \\textbf{Verein} & \\textbf{NK} & \\textbf{Kommentar} \\\\ \\hline\n \\endhead')
     for form in FORMS:
       for athlete in form:
         f.write(athlete.to_row())
